@@ -226,3 +226,76 @@ code {
 
 .badge-sold { background: #ef4444; color: #fff; }
 .badge-published { background: #22c55e; color: #000; }
+
+.catalog-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.filters form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.filters .range {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.filters input, .filters select {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.catalog-toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.filters-toggle, .filters-close {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .catalog-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .filters-toggle, .filters-close {
+    display: inline-block;
+  }
+
+  .filters {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 280px;
+    max-width: 85%;
+    padding: 16px;
+    overflow-y: auto;
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: 2px 0 12px #0006;
+    transform: translateX(-100%);
+    transition: transform 0.2s;
+    z-index: 10;
+  }
+
+  .filters.open {
+    transform: translateX(0);
+  }
+}
