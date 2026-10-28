@@ -158,3 +158,71 @@ code {
   justify-content: center;
   margin: 16px 0;
 }
+
+.car-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+@media (max-width: 768px) {
+  .car-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.car-price {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.gallery-main {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.gallery-empty {
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #8882;
+  border-radius: 8px;
+}
+
+.gallery-thumbs {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+  overflow-x: auto;
+}
+
+.gallery-thumbs img {
+  width: 80px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.gallery-thumbs img.active {
+  opacity: 1;
+  outline: 2px solid #646cff;
+}
+
+.specs {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.specs th, .specs td {
+  text-align: left;
+  padding: 6px 8px;
+  border-bottom: 1px solid #8883;
+}
+
+.badge-sold { background: #ef4444; color: #fff; }
+.badge-published { background: #22c55e; color: #000; }
