@@ -3,6 +3,7 @@ import { apiRequest } from '../api/client';
 import CarCard from '../components/CarCard';
 import FilterSidebar from '../components/FilterSidebar';
 import Pagination from '../components/Pagination';
+import { useSearchParams } from 'react-router-dom';
 
 const LIMIT = 12;
 
@@ -21,10 +22,13 @@ const SORT_OPTIONS = [
 ];
 
 export default function CatalogPage() {
+    const [searchParams] = useSearchParams();
+    const initialFilters = { ...EMPTY_FILTERS, keyword: searchParams.get('keyword') || '' };
+
     const [page, setPage] = useState(1);
     const [sort, setSort] = useState('createdAt:desc');
-    const [filters, setFilters] = useState(EMPTY_FILTERS); // применённые фильтры
-    const [draft, setDraft] = useState(EMPTY_FILTERS);     // то, что сейчас в форме
+    const [filters, setFilters] = useState(initialFilters);
+    const [draft, setDraft] = useState(initialFilters);
     const [filtersOpen, setFiltersOpen] = useState(false);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
