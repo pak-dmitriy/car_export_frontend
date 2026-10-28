@@ -1,14 +1,24 @@
-import { useEffect, useState } from 'react';
-import { apiRequest } from './api/client';
+import { Routes, Route } from 'react-router-dom';
+import Header from './components/Header';
+import HomePage from './pages/HomePage';
+import CatalogPage from './pages/CatalogPage';
+import CarPage from './pages/CarPage';
+import LoginPage from './pages/LoginPage';
+import RegisterPage from './pages/RegisterPage';
 
 export default function App() {
-  const [text, setText] = useState('Loading...');
-
-  useEffect(() => {
-    apiRequest('/api/cars')
-        .then((data) => setText(`Cars in catalogue: ${data.totalCount}`))
-        .catch((e) => setText(`Error: ${e.message}`));
-  }, []);
-
-  return <h1>{text}</h1>;
+  return (
+      <>
+        <Header />
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/cars" element={<CatalogPage />} />
+            <Route path="/cars/:id" element={<CarPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Routes>
+        </main>
+      </>
+  );
 }
