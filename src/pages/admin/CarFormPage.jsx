@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { apiRequest } from '../../api/client';
 import { FUEL_TYPES, TRANSMISSIONS, BODY_TYPES } from '../../constants';
+import ImageManager from '../../components/ImageManager';
 
 const EMPTY = {
     title: '', brand: '', model: '', year: '', price: '', mileage: '',
@@ -77,7 +78,6 @@ function Field({ label, name, form, errors, onChange, type = 'text', ...rest }) 
 }
 
 function SelectField({ label, name, form, errors, onChange, options }) {
-    // если у машины значение не из нашего списка, оставляем его в выборе
     const list = form[name] && !options.includes(form[name]) ? [form[name], ...options] : options;
     return (
         <label className="form-field">
@@ -97,6 +97,7 @@ export default function CarFormPage() {
     const navigate = useNavigate();
 
     const [form, setForm] = useState(EMPTY);
+    const [images, setImages] = useState([]);
     const [errors, setErrors] = useState({});
     const [error, setError] = useState('');
     const [saved, setSaved] = useState(false);
@@ -108,7 +109,12 @@ export default function CarFormPage() {
         let cancelled = false;
         setLoading(true);
         apiRequest(`/api/admin/cars/${id}`)
-            .then((car) => { if (!cancelled) setForm(toForm(car)); })
+            .then((car) => {
+                if (!cancelled) {
+                    setForm(toForm(car));
+                    setImages(car.images);
+                }
+            })
             .catch((e) => { if (!cancelled) setError(e.status === 404 ? 'Car not found' : e.message); })
             .finally(() => { if (!cancelled) setLoading(false); });
         return () => { cancelled = true; };
@@ -192,6 +198,8 @@ export default function CarFormPage() {
                     {submitting ? 'Saving...' : isEdit ? 'Save changes' : 'Create car'}
                 </button>
             </form>
+
+            {isEdit && <ImageManager carId={id} images={images} onChange={setImages} />}
         </div>
     );
 }

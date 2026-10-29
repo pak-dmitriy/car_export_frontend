@@ -371,3 +371,29 @@ code {
   color: red;
   font-size: 13px;
 }
+
+.image-manager {
+  max-width: 800px;
+  margin-top: 24px;
+  text-align: left;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.image-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.image-item img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 6px;
+}

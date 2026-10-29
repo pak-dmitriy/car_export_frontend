@@ -8,6 +8,11 @@ export class ApiError extends Error {
     }
 }
 
+export function imageUrl(path) {
+    if (!path) return '';
+    return path.startsWith('http') ? path : API_URL + path;
+}
+
 export async function apiRequest(path, { method = 'GET', body, params } = {}) {
     const url = new URL(API_URL + path);
 
@@ -22,14 +27,16 @@ export async function apiRequest(path, { method = 'GET', body, params } = {}) {
     const headers = {};
     const token = localStorage.getItem('token');
     if (token) headers.Authorization = `Bearer ${token}`;
-    if (body) headers['Content-Type'] = 'application/json';
+
+    const isForm = body instanceof FormData;
+    if (body && !isForm) headers['Content-Type'] = 'application/json';
 
     let response;
     try {
         response = await fetch(url, {
             method,
             headers,
-            body: body ? JSON.stringify(body) : undefined,
+            body: body ? (isForm ? body : JSON.stringify(body)) : undefined,
         });
     } catch {
         throw new ApiError(0, 'Server is not available');

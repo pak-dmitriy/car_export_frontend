@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { apiRequest } from '../api/client';
+import { useAuth } from '../context/AuthContext';
 import ImageGallery from '../components/ImageGallery';
 import StatusBadge from '../components/StatusBadge';
 
 export default function CarPage() {
     const { id } = useParams();
+    const { user } = useAuth();
     const [car, setCar] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -51,8 +53,16 @@ export default function CarPage() {
     return (
         <div className="car-page">
             <Link to="/cars">← Back to catalogue</Link>
-            <h1>{car.title} <StatusBadge status={car.status} /></h1>
+            <h1>
+                {car.title} <StatusBadge status={car.status} />
+            </h1>
             <p className="car-price">${car.price.toLocaleString()}</p>
+
+            {user?.role === 'ADMIN' && (
+                <p>
+                    <Link to={`/admin/cars/${car.id}/edit`}>Edit this car</Link>
+                </p>
+            )}
 
             <div className="car-layout">
                 <ImageGallery images={car.images} title={car.title} />

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { imageUrl } from '../api/client';
 
 export default function CarCard({ car }) {
     const mainImage = car.images.find((i) => i.main) || car.images[0];
@@ -6,7 +7,7 @@ export default function CarCard({ car }) {
     return (
         <Link to={`/cars/${car.id}`} className="car-card">
             <div className="car-card-image">
-                {mainImage ? <img src={mainImage.fileUrl} alt={car.title} /> : <span>No photo</span>}
+                {mainImage ? <img src={imageUrl(mainImage.fileUrl)} alt={car.title} /> : <span>No photo</span>}
             </div>
             <h3>{car.title}</h3>
             <p>{car.year} · {car.mileage.toLocaleString()} km · {car.fuelType}</p>
