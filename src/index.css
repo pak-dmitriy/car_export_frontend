@@ -397,3 +397,15 @@ code {
   object-fit: cover;
   border-radius: 6px;
 }
+
+.status-manager {
+  max-width: 800px;
+  margin-top: 24px;
+  text-align: left;
+}
+
+.status-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

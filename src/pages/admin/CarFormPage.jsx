@@ -3,6 +3,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { apiRequest } from '../../api/client';
 import { FUEL_TYPES, TRANSMISSIONS, BODY_TYPES } from '../../constants';
 import ImageManager from '../../components/ImageManager';
+import StatusManager from '../../components/StatusManager';
 
 const EMPTY = {
     title: '', brand: '', model: '', year: '', price: '', mileage: '',
@@ -199,6 +200,7 @@ export default function CarFormPage() {
                 </button>
             </form>
 
+            {isEdit && <StatusManager carId={id} />}
             {isEdit && <ImageManager carId={id} images={images} onChange={setImages} />}
         </div>
     );
