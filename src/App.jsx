@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProtectedRoute from './components/ProtectedRoute';
 import AdminCarsPage from './pages/admin/AdminCarsPage';
+import CarFormPage from './pages/admin/CarFormPage';
 
 export default function App() {
   return (
@@ -15,6 +16,22 @@ export default function App() {
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />
+              <Route
+                  path="/admin/cars/new"
+                  element={
+                      <ProtectedRoute roles={['ADMIN']}>
+                          <CarFormPage />
+                      </ProtectedRoute>
+                  }
+              />
+              <Route
+                  path="/admin/cars/:id/edit"
+                  element={
+                      <ProtectedRoute roles={['ADMIN']}>
+                          <CarFormPage />
+                      </ProtectedRoute>
+                  }
+              />
             <Route path="/cars" element={<CatalogPage />} />
             <Route path="/cars/:id" element={<CarPage />} />
             <Route path="/login" element={<LoginPage />} />

@@ -332,3 +332,42 @@ code {
   padding: 8px;
   border-bottom: 1px solid #8883;
 }
+
+.car-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 800px;
+  text-align: left;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 768px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.field-error {
+  color: red;
+  font-size: 13px;
+}
