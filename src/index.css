@@ -428,3 +428,45 @@ code {
   color: inherit;
   text-align: left;
 }
+
+.thread-page {
+  max-width: 800px;
+  text-align: left;
+}
+
+.chat {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.chat-message {
+  max-width: 80%;
+  padding: 10px 14px;
+  border: 1px solid #8884;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+
+.chat-message.mine {
+  align-self: flex-end;
+  background: #8882;
+}
+
+.chat-message p {
+  margin: 4px 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.reply-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reply-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
