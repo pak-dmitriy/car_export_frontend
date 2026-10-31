@@ -409,3 +409,22 @@ code {
   flex-wrap: wrap;
   gap: 8px;
 }
+
+.thread-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.thread-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid #8884;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  text-align: left;
+}

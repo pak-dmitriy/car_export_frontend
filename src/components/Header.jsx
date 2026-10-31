@@ -17,6 +17,7 @@ export default function Header() {
                 <Link to="/cars">Catalogue</Link>
                 {user ? (
                     <>
+                        <Link to="/messages">{user.role === 'ADMIN' ? 'Inbox' : 'Messages'}</Link>
                         {user.role === 'ADMIN' && <Link to="/admin/cars">Admin</Link>}
                         <span>{user.fullName}</span>
                         <button onClick={handleLogout}>Logout</button>
