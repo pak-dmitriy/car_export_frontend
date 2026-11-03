@@ -1,7 +1,15 @@
 import { createContext, useContext, useState } from 'react';
 import { apiRequest } from '../api/client';
+import i18n, { LANGUAGES } from '../i18n';
 
 const AuthContext = createContext(null);
+
+function applyLanguage(language) {
+    if (language && LANGUAGES.includes(language)) {
+        i18n.changeLanguage(language);
+        localStorage.setItem('language', language);
+    }
+}
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(() => {
@@ -12,10 +20,15 @@ export function AuthProvider({ children }) {
         }
     });
 
+    function updateUser(updated) {
+        localStorage.setItem('user', JSON.stringify(updated));
+        setUser(updated);
+    }
+
     function saveSession(data) {
         localStorage.setItem('token', data.token);
-        localStorage.setItem('user', JSON.stringify(data.user));
-        setUser(data.user);
+        updateUser(data.user);
+        applyLanguage(data.user.preferredLanguage);
     }
 
     async function login(email, password) {
@@ -41,7 +54,7 @@ export function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ user, login, register, logout }}>
+        <AuthContext.Provider value={{ user, login, register, logout, updateUser }}>
             {children}
         </AuthContext.Provider>
     );
