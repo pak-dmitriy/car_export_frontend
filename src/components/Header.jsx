@@ -1,8 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
     const { user, logout } = useAuth();
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     function handleLogout() {
@@ -13,21 +16,22 @@ export default function Header() {
     return (
         <header>
             <nav>
-                <Link to="/">Home</Link>
-                <Link to="/cars">Catalogue</Link>
+                <Link to="/">{t('nav.home')}</Link>
+                <Link to="/cars">{t('nav.catalogue')}</Link>
                 {user ? (
                     <>
-                        <Link to="/messages">{user.role === 'ADMIN' ? 'Inbox' : 'Messages'}</Link>
-                        {user.role === 'ADMIN' && <Link to="/admin/cars">Admin</Link>}
+                        <Link to="/messages">{user.role === 'ADMIN' ? t('nav.inbox') : t('nav.messages')}</Link>
+                        {user.role === 'ADMIN' && <Link to="/admin/cars">{t('nav.admin')}</Link>}
                         <span>{user.fullName}</span>
-                        <button onClick={handleLogout}>Logout</button>
+                        <button onClick={handleLogout}>{t('nav.logout')}</button>
                     </>
                 ) : (
                     <>
-                        <Link to="/login">Login</Link>
-                        <Link to="/register">Register</Link>
+                        <Link to="/login">{t('nav.login')}</Link>
+                        <Link to="/register">{t('nav.register')}</Link>
                     </>
                 )}
+                <LanguageSwitcher />
             </nav>
         </header>
     );

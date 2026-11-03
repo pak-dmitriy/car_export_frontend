@@ -1,0 +1,12 @@
+{
+  "nav": {
+    "home": "Home",
+    "catalogue": "Catalogue",
+    "messages": "Messages",
+    "inbox": "Inbox",
+    "admin": "Admin",
+    "login": "Login",
+    "register": "Register",
+    "logout": "Logout"
+  }
+}
