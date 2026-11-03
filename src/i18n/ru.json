@@ -21,5 +21,63 @@
     "fullName": "Полное имя",
     "loginButton": "Войти",
     "registerButton": "Зарегистрироваться"
+  },
+  "catalog": {
+    "title": "Каталог",
+    "filtersButton": "Фильтры",
+    "found": "Найдено: {{count}}",
+    "noCars": "Машины не найдены.",
+    "sortNewest": "Сначала новые",
+    "sortPriceAsc": "Цена: по возрастанию",
+    "sortPriceDesc": "Цена: по убыванию",
+    "sortYearDesc": "Год: новее",
+    "sortMileageAsc": "Пробег: меньше"
+  },
+  "filters": {
+    "search": "Поиск",
+    "searchPlaceholder": "Марка, модель, слово",
+    "brand": "Марка",
+    "model": "Модель",
+    "yearFrom": "Год от",
+    "yearTo": "Год до",
+    "priceFrom": "Цена от",
+    "priceTo": "Цена до",
+    "fuelType": "Топливо",
+    "transmission": "Коробка передач",
+    "bodyType": "Кузов",
+    "any": "Любой",
+    "apply": "Применить",
+    "reset": "Сбросить",
+    "close": "Закрыть"
+  },
+  "car": {
+    "noPhoto": "Нет фото",
+    "reserved": "Зарезервирована",
+    "km": "км"
+  },
+  "pagination": {
+    "previous": "Назад",
+    "next": "Вперёд",
+    "page": "Страница {{page}} из {{total}}"
+  },
+  "fuel": {
+    "PETROL": "Бензин",
+    "DIESEL": "Дизель",
+    "HYBRID": "Гибрид",
+    "ELECTRIC": "Электро",
+    "LPG": "Газ"
+  },
+  "transmission": {
+    "AUTOMATIC": "Автомат",
+    "MANUAL": "Механика"
+  },
+  "body": {
+    "SEDAN": "Седан",
+    "SUV": "Внедорожник",
+    "HATCHBACK": "Хэтчбек",
+    "COUPE": "Купе",
+    "WAGON": "Универсал",
+    "VAN": "Фургон",
+    "PICKUP": "Пикап"
   }
 }

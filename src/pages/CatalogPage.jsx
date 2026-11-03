@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../api/client';
 import CarCard from '../components/CarCard';
 import FilterSidebar from '../components/FilterSidebar';
 import Pagination from '../components/Pagination';
-import { useSearchParams } from 'react-router-dom';
 
 const LIMIT = 12;
 
@@ -14,14 +15,15 @@ const EMPTY_FILTERS = {
 };
 
 const SORT_OPTIONS = [
-    { value: 'createdAt:desc', label: 'Newest first' },
-    { value: 'price:asc', label: 'Price: low to high' },
-    { value: 'price:desc', label: 'Price: high to low' },
-    { value: 'year:desc', label: 'Year: newest' },
-    { value: 'mileage:asc', label: 'Mileage: lowest' },
+    { value: 'createdAt:desc', key: 'catalog.sortNewest' },
+    { value: 'price:asc', key: 'catalog.sortPriceAsc' },
+    { value: 'price:desc', key: 'catalog.sortPriceDesc' },
+    { value: 'year:desc', key: 'catalog.sortYearDesc' },
+    { value: 'mileage:asc', key: 'catalog.sortMileageAsc' },
 ];
 
 export default function CatalogPage() {
+    const { t } = useTranslation();
     const [searchParams] = useSearchParams();
     const initialFilters = { ...EMPTY_FILTERS, keyword: searchParams.get('keyword') || '' };
 
@@ -70,7 +72,7 @@ export default function CatalogPage() {
 
     return (
         <div>
-            <h1>Catalogue</h1>
+            <h1>{t('catalog.title')}</h1>
 
             <div className="catalog-layout">
                 <FilterSidebar
@@ -84,18 +86,20 @@ export default function CatalogPage() {
 
                 <section>
                     <div className="catalog-toolbar">
-                        <button className="filters-toggle" onClick={() => setFiltersOpen(true)}>Filters</button>
+                        <button className="filters-toggle" onClick={() => setFiltersOpen(true)}>
+                            {t('catalog.filtersButton')}
+                        </button>
                         <select value={sort} onChange={handleSortChange}>
                             {SORT_OPTIONS.map((o) => (
-                                <option key={o.value} value={o.value}>{o.label}</option>
+                                <option key={o.value} value={o.value}>{t(o.key)}</option>
                             ))}
                         </select>
-                        {data && <span>{data.totalCount} cars</span>}
+                        {data && <span>{t('catalog.found', { count: data.totalCount })}</span>}
                     </div>
 
-                    {loading && <p>Loading...</p>}
+                    {loading && <p>{t('common.loading')}</p>}
                     {error && <p style={{ color: 'red' }}>{error}</p>}
-                    {!loading && !error && data?.items.length === 0 && <p>No cars found.</p>}
+                    {!loading && !error && data?.items.length === 0 && <p>{t('catalog.noCars')}</p>}
 
                     <div className="car-grid">
                         {data?.items.map((car) => <CarCard key={car.id} car={car} />)}
