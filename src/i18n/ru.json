@@ -8,5 +8,18 @@
     "login": "Вход",
     "register": "Регистрация",
     "logout": "Выйти"
+  },
+  "common": {
+    "loading": "Загрузка..."
+  },
+  "auth": {
+    "loginTitle": "Вход",
+    "registerTitle": "Регистрация",
+    "email": "Email",
+    "password": "Пароль",
+    "passwordHint": "Пароль (минимум 8 символов)",
+    "fullName": "Полное имя",
+    "loginButton": "Войти",
+    "registerButton": "Зарегистрироваться"
   }
 }

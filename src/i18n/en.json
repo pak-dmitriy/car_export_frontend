@@ -8,5 +8,18 @@
     "login": "Login",
     "register": "Register",
     "logout": "Logout"
+  },
+  "common": {
+    "loading": "Loading..."
+  },
+  "auth": {
+    "loginTitle": "Login",
+    "registerTitle": "Register",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "Password (min 8 characters)",
+    "fullName": "Full name",
+    "loginButton": "Login",
+    "registerButton": "Register"
   }
 }

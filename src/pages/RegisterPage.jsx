@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { useAuth } from '../context/AuthContext';
 
 export default function RegisterPage() {
     const { register } = useAuth();
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
@@ -30,23 +32,23 @@ export default function RegisterPage() {
 
     return (
         <div>
-            <h1>Register</h1>
+            <h1>{t('auth.registerTitle')}</h1>
             <form onSubmit={handleSubmit}>
-                <input placeholder="Full name" required minLength={2} maxLength={100}
+                <input placeholder={t('auth.fullName')} required minLength={2} maxLength={100}
                        value={fullName} onChange={(e) => setFullName(e.target.value)} />
                 {fieldErrors.fullName && <p style={{ color: 'red' }}>{fieldErrors.fullName}</p>}
 
-                <input type="email" placeholder="Email" required
+                <input type="email" placeholder={t('auth.email')} required
                        value={email} onChange={(e) => setEmail(e.target.value)} />
                 {fieldErrors.email && <p style={{ color: 'red' }}>{fieldErrors.email}</p>}
 
-                <input type="password" placeholder="Password (min 8 characters)" required minLength={8}
+                <input type="password" placeholder={t('auth.passwordHint')} required minLength={8}
                        value={password} onChange={(e) => setPassword(e.target.value)} />
                 {fieldErrors.password && <p style={{ color: 'red' }}>{fieldErrors.password}</p>}
 
                 {error && !Object.keys(fieldErrors).length && <p style={{ color: 'red' }}>{error}</p>}
                 <button type="submit" disabled={loading}>
-                    {loading ? 'Loading...' : 'Register'}
+                    {loading ? t('common.loading') : t('auth.registerButton')}
                 </button>
             </form>
         </div>
