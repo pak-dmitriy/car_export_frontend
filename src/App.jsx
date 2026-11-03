@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import MessagesPage from './pages/MessagesPage';
 import ThreadPage from './pages/ThreadPage';
+import ProfilePage from './pages/ProfilePage';
 import AdminCarsPage from './pages/admin/AdminCarsPage';
 import CarFormPage from './pages/admin/CarFormPage';
 
@@ -35,6 +36,14 @@ export default function App() {
                         element={
                             <ProtectedRoute>
                                 <ThreadPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/profile"
+                        element={
+                            <ProtectedRoute>
+                                <ProfilePage />
                             </ProtectedRoute>
                         }
                     />

@@ -22,7 +22,7 @@ export default function Header() {
                     <>
                         <Link to="/messages">{user.role === 'ADMIN' ? t('nav.inbox') : t('nav.messages')}</Link>
                         {user.role === 'ADMIN' && <Link to="/admin/cars">{t('nav.admin')}</Link>}
-                        <span>{user.fullName}</span>
+                        <Link to="/profile">{user.fullName}</Link>
                         <button onClick={handleLogout}>{t('nav.logout')}</button>
                     </>
                 ) : (

@@ -1,0 +1,17 @@
+{
+  "profile": {
+    "title": "Profile",
+    "email": "Email",
+    "role": "Role",
+    "roleNames": {
+      "USER": "Buyer",
+      "ADMIN": "Administrator"
+    },
+    "fullName": "Full name",
+    "language": "Interface language",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "saved": "Saved",
+    "errName": "Name must be 2–100 characters"
+  }
+}
