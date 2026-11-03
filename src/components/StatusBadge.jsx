@@ -1,11 +1,10 @@
-const LABELS = {
-    DRAFT: 'Draft',
-    PUBLISHED: 'Available',
-    RESERVED: 'Reserved',
-    SOLD: 'Sold',
-    HIDDEN: 'Hidden',
-};
+import { useTranslation } from 'react-i18next';
 
 export default function StatusBadge({ status }) {
-    return <span className={`badge badge-${status.toLowerCase()}`}>{LABELS[status] || status}</span>;
+    const { t } = useTranslation();
+    return (
+        <span className={`badge badge-${status.toLowerCase()}`}>
+      {t(`status.${status}`, { defaultValue: status })}
+    </span>
+    );
 }

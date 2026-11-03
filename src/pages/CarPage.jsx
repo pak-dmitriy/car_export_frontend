@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 import ImageGallery from '../components/ImageGallery';
@@ -8,6 +9,7 @@ import StatusBadge from '../components/StatusBadge';
 export default function CarPage() {
     const { id } = useParams();
     const { user } = useAuth();
+    const { t } = useTranslation();
     const navigate = useNavigate();
 
     const [car, setCar] = useState(null);
@@ -37,7 +39,7 @@ export default function CarPage() {
             navigate('/login');
             return;
         }
-        setSubject(`Question about ${car.title}`.slice(0, 150));
+        setSubject(t('car.subjectPrefill', { title: car.title }).slice(0, 150));
         setAskOpen(true);
     }
 
@@ -49,10 +51,10 @@ export default function CarPage() {
         const trimmedText = text.trim();
         const localErrors = {};
         if (trimmedSubject.length < 3 || trimmedSubject.length > 150) {
-            localErrors.subject = 'Subject must be 3–150 characters';
+            localErrors.subject = t('car.errSubject');
         }
         if (trimmedText.length < 1 || trimmedText.length > 2000) {
-            localErrors.text = 'Message must be 1–2000 characters';
+            localErrors.text = t('car.errText');
         }
         setErrors(localErrors);
         if (Object.keys(localErrors).length > 0) return;
@@ -72,36 +74,36 @@ export default function CarPage() {
         }
     }
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p>{t('common.loading')}</p>;
 
     if (error) {
         return (
             <div>
                 <p style={{ color: 'red' }}>
-                    {error.status === 404 ? 'Car not found' : error.message}
+                    {error.status === 404 ? t('car.notFound') : error.message}
                 </p>
-                <Link to="/cars">Back to catalogue</Link>
+                <Link to="/cars">{t('car.backShort')}</Link>
             </div>
         );
     }
 
     const specs = [
-        ['Brand', car.brand],
-        ['Model', car.model],
-        ['Year', car.year],
-        ['Mileage', `${car.mileage.toLocaleString()} km`],
-        ['Fuel type', car.fuelType],
-        ['Transmission', car.transmission],
-        ['Engine volume', car.engineVolume ? `${car.engineVolume} L` : null],
-        ['Body type', car.bodyType],
-        ['Color', car.color],
-        ['Country of origin', car.countryOfOrigin],
-        ['Export location', car.exportLocation],
+        [t('spec.brand'), car.brand],
+        [t('spec.model'), car.model],
+        [t('spec.year'), car.year],
+        [t('spec.mileage'), `${car.mileage.toLocaleString()} ${t('car.km')}`],
+        [t('spec.fuelType'), t(`fuel.${car.fuelType}`, { defaultValue: car.fuelType })],
+        [t('spec.transmission'), t(`transmission.${car.transmission}`, { defaultValue: car.transmission })],
+        [t('spec.engineVolume'), car.engineVolume ? `${car.engineVolume} ${t('spec.liter')}` : null],
+        [t('spec.bodyType'), t(`body.${car.bodyType}`, { defaultValue: car.bodyType })],
+        [t('spec.color'), car.color],
+        [t('spec.countryOfOrigin'), car.countryOfOrigin],
+        [t('spec.exportLocation'), car.exportLocation],
     ].filter(([, value]) => value);
 
     return (
         <div className="car-page">
-            <Link to="/cars">← Back to catalogue</Link>
+            <Link to="/cars">{t('car.back')}</Link>
             <h1>
                 {car.title} <StatusBadge status={car.status} />
             </h1>
@@ -109,7 +111,7 @@ export default function CarPage() {
 
             {user?.role === 'ADMIN' && (
                 <p>
-                    <Link to={`/admin/cars/${car.id}/edit`}>Edit this car</Link>
+                    <Link to={`/admin/cars/${car.id}/edit`}>{t('car.edit')}</Link>
                 </p>
             )}
 
@@ -126,28 +128,28 @@ export default function CarPage() {
                     </table>
 
                     {!askOpen && (
-                        <button type="button" onClick={handleAskClick}>Ask about this car</button>
+                        <button type="button" onClick={handleAskClick}>{t('car.ask')}</button>
                     )}
 
                     {askOpen && (
                         <form onSubmit={handleSend} noValidate className="reply-form">
                             <label className="form-field">
-                                Subject
+                                {t('car.askSubject')}
                                 <input value={subject} onChange={(e) => setSubject(e.target.value)} />
                                 {errors.subject && <span className="field-error">{errors.subject}</span>}
                             </label>
                             <label className="form-field">
-                                Message
+                                {t('car.askMessage')}
                                 <textarea rows="4" value={text} onChange={(e) => setText(e.target.value)} />
                                 <small>{text.length}/2000</small>
                                 {errors.text && <span className="field-error">{errors.text}</span>}
                             </label>
                             {formError && <span className="field-error">{formError}</span>}
                             <button type="submit" disabled={sending}>
-                                {sending ? 'Sending...' : 'Send'}
+                                {sending ? t('car.sending') : t('car.send')}
                             </button>
                             <button type="button" onClick={() => setAskOpen(false)} disabled={sending}>
-                                Cancel
+                                {t('car.cancel')}
                             </button>
                         </form>
                     )}
@@ -156,7 +158,7 @@ export default function CarPage() {
 
             {car.description && (
                 <>
-                    <h2>Description</h2>
+                    <h2>{t('car.description')}</h2>
                     <p>{car.description}</p>
                 </>
             )}

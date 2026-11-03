@@ -1,12 +1,14 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { imageUrl } from '../api/client';
 
 export default function ImageGallery({ images, title }) {
+    const { t } = useTranslation();
     const sorted = [...images].sort((a, b) => Number(b.main) - Number(a.main));
     const [index, setIndex] = useState(0);
 
     if (sorted.length === 0) {
-        return <div className="gallery-empty">No photo</div>;
+        return <div className="gallery-empty">{t('car.noPhoto')}</div>;
     }
 
     return (

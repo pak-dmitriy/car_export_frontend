@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../api/client';
 import CarCard from '../components/CarCard';
 
 export default function HomePage() {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const [keyword, setKeyword] = useState('');
     const [cars, setCars] = useState([]);
@@ -28,28 +30,28 @@ export default function HomePage() {
     return (
         <div>
             <section className="hero">
-                <h1>Used cars from Korea</h1>
-                <p>Find a car and ask our manager about export.</p>
+                <h1>{t('home.title')}</h1>
+                <p>{t('home.subtitle')}</p>
                 <form onSubmit={handleSearch} className="hero-search">
                     <input
-                        placeholder="Brand, model or keyword"
+                        placeholder={t('home.searchPlaceholder')}
                         value={keyword}
                         onChange={(e) => setKeyword(e.target.value)}
                     />
-                    <button type="submit">Search</button>
+                    <button type="submit">{t('home.search')}</button>
                 </form>
             </section>
 
-            <h2>Latest cars</h2>
-            {loading && <p>Loading...</p>}
+            <h2>{t('home.latest')}</h2>
+            {loading && <p>{t('common.loading')}</p>}
             {error && <p style={{ color: 'red' }}>{error}</p>}
-            {!loading && !error && cars.length === 0 && <p>No cars yet.</p>}
+            {!loading && !error && cars.length === 0 && <p>{t('home.noCars')}</p>}
 
             <div className="car-grid">
                 {cars.map((car) => <CarCard key={car.id} car={car} />)}
             </div>
 
-            <Link to="/cars">View all cars →</Link>
+            <Link to="/cars">{t('home.viewAll')}</Link>
         </div>
     );
 }

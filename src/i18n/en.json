@@ -22,6 +22,15 @@
     "loginButton": "Login",
     "registerButton": "Register"
   },
+  "home": {
+    "title": "Used cars from Korea",
+    "subtitle": "Find a car and ask our manager about export.",
+    "searchPlaceholder": "Brand, model or keyword",
+    "search": "Search",
+    "latest": "Latest cars",
+    "noCars": "No cars yet.",
+    "viewAll": "View all cars →"
+  },
   "catalog": {
     "title": "Catalogue",
     "filtersButton": "Filters",
@@ -53,7 +62,42 @@
   "car": {
     "noPhoto": "No photo",
     "reserved": "Reserved",
-    "km": "km"
+    "km": "km",
+    "back": "← Back to catalogue",
+    "backShort": "Back to catalogue",
+    "notFound": "Car not found",
+    "edit": "Edit this car",
+    "description": "Description",
+    "ask": "Ask about this car",
+    "askSubject": "Subject",
+    "askMessage": "Message",
+    "subjectPrefill": "Question about {{title}}",
+    "errSubject": "Subject must be 3–150 characters",
+    "errText": "Message must be 1–2000 characters",
+    "send": "Send",
+    "sending": "Sending...",
+    "cancel": "Cancel"
+  },
+  "spec": {
+    "brand": "Brand",
+    "model": "Model",
+    "year": "Year",
+    "mileage": "Mileage",
+    "fuelType": "Fuel type",
+    "transmission": "Transmission",
+    "engineVolume": "Engine volume",
+    "liter": "L",
+    "bodyType": "Body type",
+    "color": "Color",
+    "countryOfOrigin": "Country of origin",
+    "exportLocation": "Export location"
+  },
+  "status": {
+    "DRAFT": "Draft",
+    "PUBLISHED": "Available",
+    "RESERVED": "Reserved",
+    "SOLD": "Sold",
+    "HIDDEN": "Hidden"
   },
   "pagination": {
     "previous": "Previous",
