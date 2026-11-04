@@ -11,6 +11,7 @@ import ThreadPage from './pages/ThreadPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminCarsPage from './pages/admin/AdminCarsPage';
 import CarFormPage from './pages/admin/CarFormPage';
+import AdminUsersPage from './pages/admin/AdminUsersPage';
 
 export default function App() {
     return (
@@ -68,6 +69,14 @@ export default function App() {
                         element={
                             <ProtectedRoute roles={['ADMIN']}>
                                 <CarFormPage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin/users"
+                        element={
+                            <ProtectedRoute roles={['ADMIN']}>
+                                <AdminUsersPage />
                             </ProtectedRoute>
                         }
                     />

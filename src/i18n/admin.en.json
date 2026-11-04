@@ -1,0 +1,25 @@
+{
+  "admin": {
+    "navUsers": "Users",
+    "users": {
+      "title": "Users",
+      "searchPlaceholder": "Name or email",
+      "search": "Search",
+      "name": "Name",
+      "email": "Email",
+      "role": "Role",
+      "status": "Status",
+      "you": "You",
+      "noUsers": "No users found.",
+      "confirmBlock": "Block this user? They will lose access immediately.",
+      "roleNames": {
+        "USER": "Buyer",
+        "ADMIN": "Administrator"
+      },
+      "statusNames": {
+        "ACTIVE": "Active",
+        "BLOCKED": "Blocked"
+      }
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "admin": {
+    "navUsers": "Пользователи",
+    "users": {
+      "title": "Пользователи",
+      "searchPlaceholder": "Имя или email",
+      "search": "Найти",
+      "name": "Имя",
+      "email": "Email",
+      "role": "Роль",
+      "status": "Статус",
+      "you": "Это вы",
+      "noUsers": "Пользователи не найдены.",
+      "confirmBlock": "Заблокировать пользователя? Он сразу потеряет доступ.",
+      "roleNames": {
+        "USER": "Покупатель",
+        "ADMIN": "Администратор"
+      },
+      "statusNames": {
+        "ACTIVE": "Активен",
+        "BLOCKED": "Заблокирован"
+      }
+    }
+  }
+}
