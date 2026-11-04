@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import MessagesPage from './pages/MessagesPage';
 import ThreadPage from './pages/ThreadPage';
 import ProfilePage from './pages/ProfilePage';
+import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import AdminCarsPage from './pages/admin/AdminCarsPage';
 import CarFormPage from './pages/admin/CarFormPage';
 import AdminUsersPage from './pages/admin/AdminUsersPage';
@@ -45,6 +46,14 @@ export default function App() {
                         element={
                             <ProtectedRoute>
                                 <ProfilePage />
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path="/admin"
+                        element={
+                            <ProtectedRoute roles={['ADMIN']}>
+                                <AdminDashboardPage />
                             </ProtectedRoute>
                         }
                     />

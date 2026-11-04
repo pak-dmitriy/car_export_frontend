@@ -1,6 +1,16 @@
 {
   "admin": {
     "navUsers": "Пользователи",
+    "navDashboard": "Сводка",
+    "dashboard": {
+      "title": "Сводка",
+      "totalCars": "Всего машин",
+      "publishedCars": "Опубликовано",
+      "reservedCars": "Зарезервировано",
+      "soldCars": "Продано",
+      "totalUsers": "Пользователей",
+      "unreadMessages": "Непрочитанных сообщений"
+    },
     "users": {
       "title": "Пользователи",
       "searchPlaceholder": "Имя или email",

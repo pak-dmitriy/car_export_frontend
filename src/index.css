@@ -470,3 +470,58 @@ code {
   width: 100%;
   box-sizing: border-box;
 }
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 16px 0;
+}
+
+.dashboard-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 16px;
+  border: 1px solid #8884;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  text-align: left;
+}
+
+.dashboard-number {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.site-header {
+  border-bottom: 1px solid #8884;
+  padding: 10px 16px;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 24px;
+}
+
+.nav-links,
+.nav-user {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.nav a {
+  color: inherit;
+  text-decoration: none;
+  padding: 4px 2px;
+}
+
+.nav a:hover {
+  text-decoration: underline;
+}

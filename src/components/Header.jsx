@@ -13,26 +13,34 @@ export default function Header() {
         navigate('/');
     }
 
+    const isAdmin = user?.role === 'ADMIN';
+
     return (
-        <header>
-            <nav>
-                <Link to="/">{t('nav.home')}</Link>
-                <Link to="/cars">{t('nav.catalogue')}</Link>
-                {user ? (
-                    <>
-                        <Link to="/messages">{user.role === 'ADMIN' ? t('nav.inbox') : t('nav.messages')}</Link>
-                        {user.role === 'ADMIN' && <Link to="/admin/cars">{t('nav.admin')}</Link>}
-                        {user.role === 'ADMIN' && <Link to="/admin/users">{t('admin.navUsers')}</Link>}
-                        <Link to="/profile">{user.fullName}</Link>
-                        <button onClick={handleLogout}>{t('nav.logout')}</button>
-                    </>
-                ) : (
-                    <>
-                        <Link to="/login">{t('nav.login')}</Link>
-                        <Link to="/register">{t('nav.register')}</Link>
-                    </>
-                )}
-                <LanguageSwitcher />
+        <header className="site-header">
+            <nav className="nav">
+                <div className="nav-links">
+                    <Link to="/">{t('nav.home')}</Link>
+                    <Link to="/cars">{t('nav.catalogue')}</Link>
+                    {user && <Link to="/messages">{isAdmin ? t('nav.inbox') : t('nav.messages')}</Link>}
+                    {isAdmin && <Link to="/admin">{t('admin.navDashboard')}</Link>}
+                    {isAdmin && <Link to="/admin/cars">{t('nav.admin')}</Link>}
+                    {isAdmin && <Link to="/admin/users">{t('admin.navUsers')}</Link>}
+                </div>
+
+                <div className="nav-user">
+                    {user ? (
+                        <>
+                            <Link to="/profile">{user.fullName}</Link>
+                            <button onClick={handleLogout}>{t('nav.logout')}</button>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login">{t('nav.login')}</Link>
+                            <Link to="/register">{t('nav.register')}</Link>
+                        </>
+                    )}
+                    <LanguageSwitcher />
+                </div>
             </nav>
         </header>
     );

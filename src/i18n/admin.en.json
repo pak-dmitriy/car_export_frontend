@@ -1,6 +1,16 @@
 {
   "admin": {
     "navUsers": "Users",
+    "navDashboard": "Dashboard",
+    "dashboard": {
+      "title": "Dashboard",
+      "totalCars": "Total cars",
+      "publishedCars": "Published",
+      "reservedCars": "Reserved",
+      "soldCars": "Sold",
+      "totalUsers": "Users",
+      "unreadMessages": "Unread messages"
+    },
     "users": {
       "title": "Users",
       "searchPlaceholder": "Name or email",
