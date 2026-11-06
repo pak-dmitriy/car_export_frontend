@@ -6,6 +6,8 @@ import enProfile from './profile.en.json';
 import ruProfile from './profile.ru.json';
 import enAdmin from './admin.en.json';
 import ruAdmin from './admin.ru.json';
+import enManager from './manager.en.json';
+import ruManager from './manager.ru.json';
 
 export const LANGUAGES = ['en', 'ru'];
 
@@ -13,8 +15,8 @@ const saved = localStorage.getItem('language');
 
 i18n.use(initReactI18next).init({
     resources: {
-        en: { translation: { ...en, ...enProfile, ...enAdmin } },
-        ru: { translation: { ...ru, ...ruProfile, ...ruAdmin } },
+        en: { translation: { ...en, ...enProfile, ...enAdmin, ...enManager } },
+        ru: { translation: { ...ru, ...ruProfile, ...ruAdmin, ...ruManager } },
     },
     lng: LANGUAGES.includes(saved) ? saved : 'en',
     fallbackLng: 'en',

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../../api/client';
 import { FUEL_TYPES, TRANSMISSIONS, BODY_TYPES } from '../../constants';
 import ImageManager from '../../components/ImageManager';
@@ -37,34 +38,35 @@ function toRequest(f) {
     };
 }
 
-function validate(f) {
+function validate(f, t) {
     const e = {};
     const maxYear = new Date().getFullYear() + 1;
+    const err = (key, options) => t(`admin.carForm.errors.${key}`, options);
 
-    if (f.title.trim().length < 5 || f.title.trim().length > 150) e.title = 'Title must be 5–150 characters';
-    if (!f.brand.trim()) e.brand = 'Brand is required';
-    if (!f.model.trim()) e.model = 'Model is required';
+    if (f.title.trim().length < 5 || f.title.trim().length > 150) e.title = err('title');
+    if (!f.brand.trim()) e.brand = err('brand');
+    if (!f.model.trim()) e.model = err('model');
 
     const year = Number(f.year);
     if (f.year === '' || !Number.isInteger(year) || year < 1980 || year > maxYear) {
-        e.year = `Year must be between 1980 and ${maxYear}`;
+        e.year = err('year', { max: maxYear });
     }
 
-    if (f.price === '' || !(Number(f.price) > 0)) e.price = 'Price must be a positive number';
+    if (f.price === '' || !(Number(f.price) > 0)) e.price = err('price');
 
     const mileage = Number(f.mileage);
     if (f.mileage === '' || !Number.isInteger(mileage) || mileage < 0) {
-        e.mileage = 'Mileage must be zero or a positive whole number';
+        e.mileage = err('mileage');
     }
 
-    if (!f.fuelType) e.fuelType = 'Fuel type is required';
-    if (!f.transmission) e.transmission = 'Transmission is required';
-    if (!f.bodyType) e.bodyType = 'Body type is required';
+    if (!f.fuelType) e.fuelType = err('fuelType');
+    if (!f.transmission) e.transmission = err('transmission');
+    if (!f.bodyType) e.bodyType = err('bodyType');
 
     if (f.engineVolume !== '' && !(Number(f.engineVolume) > 0)) {
-        e.engineVolume = 'Engine volume must be a positive number';
+        e.engineVolume = err('engineVolume');
     }
-    if (f.description.length > 5000) e.description = 'Description must be at most 5000 characters';
+    if (f.description.length > 5000) e.description = err('description');
     return e;
 }
 
@@ -78,14 +80,17 @@ function Field({ label, name, form, errors, onChange, type = 'text', ...rest }) 
     );
 }
 
-function SelectField({ label, name, form, errors, onChange, options }) {
+function SelectField({ label, name, form, errors, onChange, options, prefix }) {
+    const { t } = useTranslation();
     const list = form[name] && !options.includes(form[name]) ? [form[name], ...options] : options;
     return (
         <label className="form-field">
             {label}
             <select name={name} value={form[name]} onChange={onChange}>
-                <option value="">Select...</option>
-                {list.map((o) => <option key={o} value={o}>{o}</option>)}
+                <option value="">{t('admin.carForm.select')}</option>
+                {list.map((o) => (
+                    <option key={o} value={o}>{t(`${prefix}.${o}`, { defaultValue: o })}</option>
+                ))}
             </select>
             {errors[name] && <span className="field-error">{errors[name]}</span>}
         </label>
@@ -93,6 +98,7 @@ function SelectField({ label, name, form, errors, onChange, options }) {
 }
 
 export default function CarFormPage() {
+    const { t } = useTranslation();
     const { id } = useParams();
     const isEdit = Boolean(id);
     const navigate = useNavigate();
@@ -116,10 +122,12 @@ export default function CarFormPage() {
                     setImages(car.images);
                 }
             })
-            .catch((e) => { if (!cancelled) setError(e.status === 404 ? 'Car not found' : e.message); })
+            .catch((e) => {
+                if (!cancelled) setError(e.status === 404 ? t('admin.carForm.notFound') : e.message);
+            })
             .finally(() => { if (!cancelled) setLoading(false); });
         return () => { cancelled = true; };
-    }, [id, isEdit]);
+    }, [id, isEdit, t]);
 
     function handleChange(e) {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -131,7 +139,7 @@ export default function CarFormPage() {
         setError('');
         setSaved(false);
 
-        const localErrors = validate(form);
+        const localErrors = validate(form, t);
         setErrors(localErrors);
         if (Object.keys(localErrors).length > 0) return;
 
@@ -152,51 +160,54 @@ export default function CarFormPage() {
         }
     }
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p>{t('common.loading')}</p>;
     if (isEdit && error && !form.title) {
         return (
             <div>
                 <p style={{ color: 'red' }}>{error}</p>
-                <Link to="/admin/cars">Back to cars</Link>
+                <Link to="/admin/cars">{t('admin.carForm.backShort')}</Link>
             </div>
         );
     }
 
     const shared = { form, errors, onChange: handleChange };
+    const label = (key) => t(`admin.carForm.labels.${key}`);
 
     return (
         <div>
-            <Link to="/admin/cars">← Back to cars</Link>
-            <h1>{isEdit ? 'Edit car' : 'Add car'}</h1>
+            <Link to="/admin/cars">{t('admin.carForm.back')}</Link>
+            <h1>{isEdit ? t('admin.carForm.editTitle') : t('admin.carForm.addTitle')}</h1>
 
             <form onSubmit={handleSubmit} noValidate className="car-form">
-                <Field label="Title" name="title" {...shared} />
+                <Field label={label('title')} name="title" {...shared} />
                 <div className="form-grid">
-                    <Field label="Brand" name="brand" {...shared} />
-                    <Field label="Model" name="model" {...shared} />
-                    <Field label="Year" name="year" type="number" {...shared} />
-                    <Field label="Price ($)" name="price" type="number" step="0.01" {...shared} />
-                    <Field label="Mileage (km)" name="mileage" type="number" {...shared} />
-                    <Field label="Engine volume (L)" name="engineVolume" type="number" step="0.1" {...shared} />
-                    <SelectField label="Fuel type" name="fuelType" options={FUEL_TYPES} {...shared} />
-                    <SelectField label="Transmission" name="transmission" options={TRANSMISSIONS} {...shared} />
-                    <SelectField label="Body type" name="bodyType" options={BODY_TYPES} {...shared} />
-                    <Field label="Color" name="color" {...shared} />
-                    <Field label="Country of origin" name="countryOfOrigin" {...shared} />
-                    <Field label="Export location" name="exportLocation" {...shared} />
+                    <Field label={label('brand')} name="brand" {...shared} />
+                    <Field label={label('model')} name="model" {...shared} />
+                    <Field label={label('year')} name="year" type="number" {...shared} />
+                    <Field label={label('price')} name="price" type="number" step="0.01" {...shared} />
+                    <Field label={label('mileage')} name="mileage" type="number" {...shared} />
+                    <Field label={label('engineVolume')} name="engineVolume" type="number" step="0.1" {...shared} />
+                    <SelectField label={label('fuelType')} name="fuelType" options={FUEL_TYPES} prefix="fuel" {...shared} />
+                    <SelectField label={label('transmission')} name="transmission" options={TRANSMISSIONS} prefix="transmission" {...shared} />
+                    <SelectField label={label('bodyType')} name="bodyType" options={BODY_TYPES} prefix="body" {...shared} />
+                    <Field label={label('color')} name="color" {...shared} />
+                    <Field label={label('countryOfOrigin')} name="countryOfOrigin" {...shared} />
+                    <Field label={label('exportLocation')} name="exportLocation" {...shared} />
                 </div>
 
                 <label className="form-field">
-                    Description
+                    {label('description')}
                     <textarea name="description" rows="5" value={form.description} onChange={handleChange} />
                     {errors.description && <span className="field-error">{errors.description}</span>}
                 </label>
 
                 {error && <p style={{ color: 'red' }}>{error}</p>}
-                {saved && <p style={{ color: 'green' }}>Saved</p>}
+                {saved && <p style={{ color: 'green' }}>{t('admin.carForm.saved')}</p>}
 
                 <button type="submit" disabled={submitting}>
-                    {submitting ? 'Saving...' : isEdit ? 'Save changes' : 'Create car'}
+                    {submitting
+                        ? t('admin.carForm.saving')
+                        : isEdit ? t('admin.carForm.saveChanges') : t('admin.carForm.create')}
                 </button>
             </form>
 

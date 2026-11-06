@@ -30,6 +30,47 @@
         "ACTIVE": "Active",
         "BLOCKED": "Blocked"
       }
+    },
+    "carForm": {
+      "back": "← Back to cars",
+      "backShort": "Back to cars",
+      "addTitle": "Add car",
+      "editTitle": "Edit car",
+      "notFound": "Car not found",
+      "select": "Select...",
+      "saved": "Saved",
+      "saving": "Saving...",
+      "saveChanges": "Save changes",
+      "create": "Create car",
+      "labels": {
+        "title": "Title",
+        "brand": "Brand",
+        "model": "Model",
+        "year": "Year",
+        "price": "Price ($)",
+        "mileage": "Mileage (km)",
+        "engineVolume": "Engine volume (L)",
+        "fuelType": "Fuel type",
+        "transmission": "Transmission",
+        "bodyType": "Body type",
+        "color": "Color",
+        "countryOfOrigin": "Country of origin",
+        "exportLocation": "Export location",
+        "description": "Description"
+      },
+      "errors": {
+        "title": "Title must be 5–150 characters",
+        "brand": "Brand is required",
+        "model": "Model is required",
+        "year": "Year must be between 1980 and {{max}}",
+        "price": "Price must be a positive number",
+        "mileage": "Mileage must be zero or a positive whole number",
+        "fuelType": "Fuel type is required",
+        "transmission": "Transmission is required",
+        "bodyType": "Body type is required",
+        "engineVolume": "Engine volume must be a positive number",
+        "description": "Description must be at most 5000 characters"
+      }
     }
   }
 }

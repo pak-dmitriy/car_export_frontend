@@ -1,0 +1,68 @@
+{
+  "statusManager": {
+    "title": "Status",
+    "current": "Current:",
+    "noChanges": "No further changes are possible.",
+    "changeTo": "Change to {{status}}",
+    "confirmSold": "Mark as Sold? This cannot be undone."
+  },
+  "imageManager": {
+    "title": "Photos ({{count}}/{{max}})",
+    "working": "Working...",
+    "noPhotos": "No photos yet.",
+    "main": "Main",
+    "makeMain": "Make main",
+    "delete": "Delete",
+    "confirmDelete": "Delete this image?",
+    "errMax": "A car can have at most {{max}} images",
+    "errType": "{{name}}: only JPG, PNG and WEBP are allowed",
+    "errSize": "{{name}}: file is larger than 5 MB"
+  },
+  "adminCars": {
+    "title": "Manage cars",
+    "add": "+ Add car",
+    "searchPlaceholder": "Search",
+    "search": "Search",
+    "allStatuses": "All statuses",
+    "noCars": "No cars found.",
+    "confirmDelete": "Delete \"{{title}}\"?",
+    "colId": "ID",
+    "colTitle": "Title",
+    "colPrice": "Price",
+    "colStatus": "Status",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "protectedRoute": {
+    "denied": "Access denied"
+  },
+  "messagesPage": {
+    "titleAdmin": "Inbox",
+    "titleUser": "My messages",
+    "noMessages": "No messages yet.",
+    "car": "Car: {{title}}",
+    "general": "General question",
+    "from": "From: {{name}}",
+    "open": "Open",
+    "closed": "Closed"
+  },
+  "thread": {
+    "back": "← Back to messages",
+    "backShort": "Back to messages",
+    "noAccess": "You do not have access to this thread",
+    "notFound": "Thread not found",
+    "car": "Car:",
+    "general": "General question",
+    "from": "From: {{name}}",
+    "open": "Open",
+    "closed": "Closed",
+    "close": "Close thread",
+    "confirmClose": "Close this thread? No more replies will be possible.",
+    "isClosed": "This thread is closed.",
+    "placeholder": "Write a message...",
+    "send": "Send",
+    "sending": "Sending...",
+    "errEmpty": "Message cannot be empty",
+    "errMax": "Message must be at most {{max}} characters"
+  }
+}

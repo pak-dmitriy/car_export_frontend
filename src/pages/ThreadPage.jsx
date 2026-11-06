@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 
 const MAX_LENGTH = 2000;
 
 export default function ThreadPage() {
+    const { t, i18n } = useTranslation();
     const { id } = useParams();
     const { user } = useAuth();
     const [thread, setThread] = useState(null);
@@ -32,11 +34,11 @@ export default function ThreadPage() {
 
         const trimmed = text.trim();
         if (trimmed.length === 0) {
-            setFormError('Message cannot be empty');
+            setFormError(t('thread.errEmpty'));
             return;
         }
         if (trimmed.length > MAX_LENGTH) {
-            setFormError(`Message must be at most ${MAX_LENGTH} characters`);
+            setFormError(t('thread.errMax', { max: MAX_LENGTH }));
             return;
         }
 
@@ -56,7 +58,7 @@ export default function ThreadPage() {
     }
 
     async function handleClose() {
-        if (!window.confirm('Close this thread? No more replies will be possible.')) return;
+        if (!window.confirm(t('thread.confirmClose'))) return;
         setFormError('');
         try {
             const updated = await apiRequest(`/api/messages/threads/${id}/close`, { method: 'PATCH' });
@@ -66,17 +68,17 @@ export default function ThreadPage() {
         }
     }
 
-    if (loading) return <p>Loading...</p>;
+    if (loading) return <p>{t('common.loading')}</p>;
 
     if (error) {
         const message =
-            error.status === 403 ? 'You do not have access to this thread'
-                : error.status === 404 ? 'Thread not found'
+            error.status === 403 ? t('thread.noAccess')
+                : error.status === 404 ? t('thread.notFound')
                     : error.message;
         return (
             <div>
                 <p style={{ color: 'red' }}>{message}</p>
-                <Link to="/messages">Back to messages</Link>
+                <Link to="/messages">{t('thread.backShort')}</Link>
             </div>
         );
     }
@@ -86,22 +88,22 @@ export default function ThreadPage() {
 
     return (
         <div className="thread-page">
-            <Link to="/messages">← Back to messages</Link>
+            <Link to="/messages">{t('thread.back')}</Link>
             <h1>{thread.subject}</h1>
 
             <p>
                 {thread.carId ? (
-                    <>Car: <Link to={`/cars/${thread.carId}`}>{thread.carTitle}</Link></>
+                    <>{t('thread.car')} <Link to={`/cars/${thread.carId}`}>{thread.carTitle}</Link></>
                 ) : (
-                    'General question'
+                    t('thread.general')
                 )}
-                {isAdmin && ` · From: ${thread.userName}`}
+                {isAdmin && ` · ${t('thread.from', { name: thread.userName })}`}
                 {' · '}
-                {closed ? 'Closed' : 'Open'}
+                {closed ? t('thread.closed') : t('thread.open')}
             </p>
 
             {isAdmin && !closed && (
-                <button type="button" onClick={handleClose}>Close thread</button>
+                <button type="button" onClick={handleClose}>{t('thread.close')}</button>
             )}
 
             <div className="chat">
@@ -109,25 +111,25 @@ export default function ThreadPage() {
                     <div key={m.id} className={`chat-message ${m.senderId === user.id ? 'mine' : ''}`}>
                         <strong>{m.senderName}</strong>
                         <p>{m.text}</p>
-                        <small>{new Date(m.createdAt).toLocaleString()}</small>
+                        <small>{new Date(m.createdAt).toLocaleString(i18n.language)}</small>
                     </div>
                 ))}
             </div>
 
             {closed ? (
-                <p>This thread is closed.</p>
+                <p>{t('thread.isClosed')}</p>
             ) : (
                 <form onSubmit={handleSend} className="reply-form">
-          <textarea
-              rows="4"
-              placeholder="Write a message..."
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-          />
+                    <textarea
+                        rows="4"
+                        placeholder={t('thread.placeholder')}
+                        value={text}
+                        onChange={(e) => setText(e.target.value)}
+                    />
                     <small>{text.length}/{MAX_LENGTH}</small>
                     {formError && <span className="field-error">{formError}</span>}
                     <button type="submit" disabled={sending}>
-                        {sending ? 'Sending...' : 'Send'}
+                        {sending ? t('thread.sending') : t('thread.send')}
                     </button>
                 </form>
             )}

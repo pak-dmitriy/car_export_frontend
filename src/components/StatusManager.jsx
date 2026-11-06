@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { apiRequest } from '../api/client';
 import StatusBadge from './StatusBadge';
 
@@ -11,6 +12,7 @@ const TRANSITIONS = {
 };
 
 export default function StatusManager({ carId }) {
+    const { t } = useTranslation();
     const [status, setStatus] = useState(null);
     const [busy, setBusy] = useState(false);
     const [error, setError] = useState('');
@@ -24,7 +26,7 @@ export default function StatusManager({ carId }) {
     }, [carId]);
 
     async function change(next) {
-        if (next === 'SOLD' && !window.confirm('Mark as SOLD? This cannot be undone.')) return;
+        if (next === 'SOLD' && !window.confirm(t('statusManager.confirmSold'))) return;
         setError('');
         setBusy(true);
         try {
@@ -46,15 +48,15 @@ export default function StatusManager({ carId }) {
 
     return (
         <section className="status-manager">
-            <h2>Status</h2>
-            <p>Current: <StatusBadge status={status} /></p>
+            <h2>{t('statusManager.title')}</h2>
+            <p>{t('statusManager.current')} <StatusBadge status={status} /></p>
 
-            {options.length === 0 && <p>No further changes are possible.</p>}
+            {options.length === 0 && <p>{t('statusManager.noChanges')}</p>}
 
             <div className="status-buttons">
                 {options.map((next) => (
                     <button key={next} type="button" onClick={() => change(next)} disabled={busy}>
-                        Change to {next}
+                        {t('statusManager.changeTo', { status: t(`status.${next}`, { defaultValue: next }) })}
                     </button>
                 ))}
             </div>
