@@ -1,16 +1,137 @@
-# React + Vite
+# Car Export — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Веб-интерфейс сайта-каталога подержанных автомобилей из Кореи на экспорт в страны СНГ: каталог с фильтрами, регистрация и вход, сообщения менеджеру, админка. Учебный портфолио-проект.
 
-Currently, two official plugins are available:
+**Стек:** React 19, Vite, React Router, i18next (русский и английский).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**Демо:**
 
-## React Compiler
+- Сайт: [car-export-kor.vercel.app](https://car-export-kor.vercel.app)
+- Бэкенд: [car_export](https://github.com/pak-dmitriy/car_export)
+- Swagger: [car-export-api.onrender.com/swagger-ui.html](https://car-export-api.onrender.com/swagger-ui.html)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Демо работает на бесплатных тарифах: после простоя первый запрос к серверу может идти около минуты, пока он просыпается.
 
-## Expanding the ESLint configuration
+____
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Что нужно установить
+
+- Node.js (актуальная LTS-версия: 20.19+ или 22.12+)
+- Запущенный бэкенд (локально или демо-сервер), см. [репозиторий бэкенда](https://github.com/pak-dmitriy/car_export)
+
+____
+
+## Быстрый старт
+
+### 1. Установить зависимости
+
+```bash
+npm install
+```
+
+### 2. Задать адрес бэкенда
+
+В корне проекта создайте файл `.env`:
+
+```
+VITE_API_URL=http://localhost:8081
+```
+
+| Переменная | Описание |
+|---|---|
+| `VITE_API_URL` | адрес бэкенда без `/` в конце |
+
+Чтобы работать с демо-сервером вместо локального бэкенда, укажите `VITE_API_URL=https://car-export-api.onrender.com`.
+
+При смене `.env` dev-сервер нужно перезапустить.
+
+### 3. Запустить приложение
+
+```bash
+npm run dev
+```
+
+Сайт откроется на `http://localhost:5173`. Этот адрес бэкенд разрешает по умолчанию (настройка CORS), поэтому для локального запуска ничего менять не нужно.
+
+____
+
+## Команды
+
+| Команда | Что делает |
+|---|---|
+| `npm run dev` | запускает сервер разработки |
+| `npm run build` | собирает сайт в папку `dist` |
+| `npm run preview` | запускает собранный сайт локально |
+| `npm run lint` | проверяет код ESLint |
+
+____
+
+## Возможности
+
+- Каталог машин: фильтры (марка, модель, год, цена, топливо, коробка, кузов), поиск, сортировка, пагинация
+- Страница машины с галереей фото и характеристиками
+- Регистрация, вход, профиль пользователя
+- Сообщения: вопрос по конкретной машине или общий, переписка с менеджером
+- Админка: список машин с поиском и фильтром по статусу, создание и редактирование, смена статуса, загрузка фото и выбор главного, список пользователей с блокировкой, сводка со статистикой
+- Два языка (русский и английский), выбор запоминается в браузере
+
+____
+
+## Страницы
+
+| Адрес | Страница | Доступ |
+|---|---|---|
+| `/` | главная | все |
+| `/cars` | каталог | все |
+| `/cars/:id` | страница машины | все |
+| `/login`, `/register` | вход и регистрация | все |
+| `/messages` | список переписок | вошедший пользователь |
+| `/messages/:id` | переписка | вошедший пользователь |
+| `/profile` | профиль | вошедший пользователь |
+| `/admin` | сводка | админ |
+| `/admin/cars` | управление машинами | админ |
+| `/admin/cars/new` | добавить машину | админ |
+| `/admin/cars/:id/edit` | редактировать машину | админ |
+| `/admin/users` | пользователи | админ |
+
+Если пользователь не вошёл, его перенаправляет на страницу входа. Если роль не подходит, показывается сообщение «Доступ запрещён».
+
+____
+
+## Как это работает
+
+- Все запросы к бэкенду идут через `src/api/client.js`. Он добавляет адрес из `VITE_API_URL`, подставляет токен в заголовок `Authorization` и превращает ошибки сервера в понятные сообщения.
+- После входа токен хранится в `localStorage`, поэтому вход сохраняется после перезагрузки страницы.
+- Переводы лежат в `src/i18n`. Новый текст добавляется в оба файла (английский и русский), в компоненте используется `t('раздел.ключ')`.
+- Фото приходят с бэкенда полными ссылками (хранятся в Cloudinary).
+
+____
+
+## Деплой
+
+Фронтенд развёрнут на Vercel и собирается автоматически при каждом push в ветку `main`.
+
+1. Импортировать репозиторий в Vercel (Application Preset определится как Vite).
+2. В Environment Variables добавить `VITE_API_URL` с адресом бэкенда.
+3. На бэкенде в переменной `CORS_ORIGINS` указать адрес сайта на Vercel, иначе вход и запросы к API будут блокироваться браузером.
+
+Файл `vercel.json` в корне проекта нужен, чтобы при обновлении страницы по адресам вроде `/cars/4` открывался сайт, а не ошибка 404.
+
+____
+
+## Структура проекта
+
+```
+src
+├── api          — клиент для запросов к бэкенду
+├── assets       — картинки
+├── components   — общие компоненты (шапка, карточка машины, фильтры, пагинация, управление фото и статусом)
+├── context      — состояние авторизации
+├── i18n         — переводы (русский и английский)
+├── pages        — страницы сайта
+│   └── admin    — страницы админки
+├── constants.js — списки значений (топливо, коробка, кузов)
+├── App.jsx      — маршруты
+└── main.jsx     — точка входа
+vercel.json
+```
